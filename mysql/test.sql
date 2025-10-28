@@ -108,6 +108,7 @@ where price >= (select avg(price) from book);
 --3권 이상 출판한 출판사, 그런 출판사의 수
 --아 모르겟다
 
+--집계함수
 select '' as '문제 3-15 - - - - - - - - - - - - - - - - - - - - - - - - ';
 select sum(saleprice) as 'revenue'
 from orders;
@@ -124,3 +125,23 @@ from customer, orders, book
 where customer.id = orders.custid
     and orders.bookid = book.id
     and customer.name like '김연아';
+
+select '' as '문제 3-19 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select custid, count(bookid) as '총 수량', sum(saleprice) as '총판매액'
+from orders
+group by custid;
+
+select '' as '문제 3-20 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select custid, count(bookid) as '주문 도서의 총 수량'
+from orders
+where saleprice>=8000
+group by custid
+having count(bookid) >=2;
+
+select '' as '문제 3-21 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select *
+from customer
+inner join orders
+on customer.id = orders.custid
+inner join book 
+on book.id = orders.bookid;
