@@ -145,3 +145,58 @@ inner join orders
 on customer.id = orders.custid
 inner join book 
 on book.id = orders.bookid;
+
+select '' as '문제 3-23 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select c.id, c.name as'이름', o.saleprice as '판매가격'
+from customer c, orders o
+where c.id = o.custid
+order by c.id;
+
+select '' as '문제 3-24 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select name, sum(saleprice)
+from customer c, orders o
+where c.id = o.custid
+group by c.name
+order by c.name;
+
+select '' as '문제 3-25 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select c.name, b.name
+from customer c, orders o, book b
+where c.id = o.custid and o.bookid = b.id;
+
+select '' as '문제 3-26 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select c.name, b.name
+from customer c, orders o, book b
+where c.id = o.custid 
+    and o.bookid = b.id 
+    and o.saleprice = 20000;
+
+select '' as '문제 3-27 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select c.name, sum(o.saleprice) as total_salePrice
+from customer c left outer join orders o 
+on c.id = o.custid
+group by c.name
+having total_salePrice is null;
+
+select '' as '문제 3-28 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select b.name, b.price
+from book b
+where b.price = (select max(b.price)from book b);
+
+select '' as '문제 3-29 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select name 
+from customer 
+where id in (
+    select distinct custid 
+    from orders
+);
+
+select '' as '문제 3-30 - - - - - - - - - - - - - - - - - - - - - - - - ';
+select c.id, c.name
+from orders o, customer c
+where o.custid = c.id 
+    and o.bookid 
+        in (
+            select id 
+            from book 
+            where publisher like '%대한%')
